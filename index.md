@@ -2,4 +2,6 @@
 title: Home
 layout: home
 ---
-This is the home.
+
+\- 25 Nov 2018 \-  
+This site is currently under construction.
