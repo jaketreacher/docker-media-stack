@@ -1,5 +1,8 @@
 title: Docker Media Stack
+baseurl: /docker-media-stack
 remote_theme: pmarsceill/just-the-docs
 aux_links:
   "View Project on GitHub":
     - "//github.com/jaketreacher/docker-media-stack"
+kramdown:
+  parse_block_html: true
