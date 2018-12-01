@@ -9,6 +9,7 @@ services:
       - ${CONFIG_DIR:?}/sonarr:/config
       - ${MEDIA_DIR:?}/series:/tv
       - ${DOWNLOAD_DIR:?}:/downloads
+    env_file: ./.env
     restart: unless-stopped
 
   radarr:
@@ -20,6 +21,7 @@ services:
       - ${CONFIG_DIR:?}/radarr:/config
       - ${MEDIA_DIR:?}/movies:/tv
       - ${DOWNLOAD_DIR:?}:/downloads
+    env_file: ./.env
     restart: unless-stopped
 
   deluge:
@@ -29,6 +31,7 @@ services:
     volumes:
       - ${CONFIG_DIR:?}/deluge:/config
       - ${DOWNLOAD_DIR:?}:/torrents
+    env_file: ./.env
     restart: unless-stopped
 
   jackett:
@@ -38,8 +41,9 @@ services:
       - 9117:9117
     volumes:
       - ${CONFIG_DIR:?}/jackett:/config
+    env_file: ./.env
     restart: unless-stopped
-  
+
   plex:
     image: plexinc/pms-docker
     container_name: plex
@@ -47,6 +51,7 @@ services:
     volumes:
       - ${CONFIG_DIR:?}/plex:/config
       - ${MEDIA_DIR:?}:/media
+    env_file: ./.env
     restart: unless-stopped
 
   tautulli:
@@ -57,6 +62,7 @@ services:
     volumes:
       - ${CONFIG_DIR:?}/tautulli:/config
       - ${CONFIG_DIR:?}/plex/Library/Application\ Support/Plex\ Media\Server/Logs/:/plex_logs:ro
+    env_file: ./.env
     restart: unless-stopped
 
   watchtower:
@@ -65,4 +71,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: sonarr radarr deluge jackett plex tautulli watchtower_media-stack -s "0 0 3 ? * *" --cleanup
+    env_file: ./.env
     restart: unless-stopped
