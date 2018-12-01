@@ -58,3 +58,11 @@ services:
       - ${CONFIG_DIR:?}/tautulli:/config
       - ${CONFIG_DIR:?}/plex/Library/Application\ Support/Plex\ Media\Server/Logs/:/plex_logs:ro
     restart: unless-stopped
+
+  watchtower:
+    image: v2tec/watchtower
+    container_name: watchtower_media-stack
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: sonarr radarr deluge jackett plex tautulli watchtower_media-stack -s "0 0 3 ? * *" --cleanup
+    restart: unless-stopped

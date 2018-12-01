@@ -28,17 +28,6 @@ Therefore, it is best to run this on **Linux**.
 ```
 docker-compose up -d
 ```
-3. (Optional) To automatically update images, setup watchtower  
-_Change arguments where necessary_
-```
-docker run -d \ 
-    --name watchtower \
-    --restart=unless-stopped \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    v2tec/watchtower \
-    -s "0 0 3 ? * SUN" \
-    --cleanup
-```
 
 ---
 ## Futher Information
