@@ -89,7 +89,6 @@ This is beneficial as common layers will only be downloaded once. This results i
     ```
     The `-t` argument will set the tag in the format `name:tag`. Given we haven't explicity specified a `:tag` it will default to `:latest`.  
     The `.` is the build context - this is the directory that will be sent into the docker daemon.  
-    The `-f` argument can be used to specific a Dockerfile that isn't named `Dockerfile`.  
 
     You will see the output of each step during the build process.  
 
@@ -149,11 +148,15 @@ This is beneficial as common layers will only be downloaded once. This results i
         apt-get update && \
         apt-get install nzbdrone -y
     VOLUME [ "/media", "/downloads" ]
+    EXPOSE 8989
     CMD ["/usr/bin/mono", "/opt/NzbDrone/NzbDrone.exe", "--nobrowser"]
     ```
 
-    Since each instruction will create a new layer, I've opted to combine `RUN` into a single step.  
-    For a production image, this is the preferred method as it will make the image smaller.  
+    It's a lot easier than expected – I've pretty much just copied the instructions from the official documentation while stripping any use of `sudo`. Commands inside of docker will run as the root user.  
+
+    Since each instruction will create a new layer, I've opted to combine `RUN` into a single step. For a production image, this is the preferred method as it will make the image smaller.  
+
+    You may also notice I've included `EXPOSE`. This serves as a type of documentation between the person who builds the image and the person who runs the container, and will appear when inspecting an image. Although this won't publish the port, it is good practice to include this.  
     </details>
 
     ---
@@ -222,6 +225,7 @@ Linuxserver uses the latter for their images, but I found the former to be easie
         mkdir -p /etc/service/deluge-web && \ 
         ln -s /etc/sv/deluge-web.sh /etc/service/deluge-web/run
     VOLUME [ "/config", "/downloads" ]
+    EXPOSE 8112
     ```
 
     You may have noticed a new instruction, `COPY`. This will copy the _contents_ of our `runit` directory into the `/etc/sv/` directory of the container.  
@@ -247,3 +251,5 @@ Linuxserver uses the latter for their images, but I found the former to be easie
     The default port for deluge-web is 8112.  
 
     Open your browser to `http://localhost:8112` to confirm it is working.  
+
+We now have two services that area able to interact with each other. However, starting them can be a tedious process. In the next part of the tutorial, we'll look at using a docker-compose file to define our environment.

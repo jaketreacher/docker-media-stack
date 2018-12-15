@@ -45,8 +45,7 @@ You should see something similiar to the following:
 
 Images are an inert, immutable file that is essentially a snapshot of a container.
 
-Containers are a lightweight and portable encapsulations of an environment in which to run applications.
-Containers are an instance of an image. <!-- Reword this -->
+Containers are a lightweight and portable encapsulations of an environment in which to run applications which could simply be thought of as 'an instance of an image'.
 
 We can see the images that currently exist with either `docker image ls` or `docker images`.
 
@@ -112,10 +111,10 @@ Rather than doing this with the `run` command, we shall manually `pull`, `create
     docker create --name busybox_interactive -it busybox
     ```
 
-    `-i`: interactive, which keeps STDIN open
+    `-i`: interactive, which keeps STDIN open  
     `-t`: allocate a pseudo-TTY, so we can interact with the terminal
-    These are typically used together.
-    `--name`: as you may have guessed, set the name of the container.
+    These are typically used together.  
+    `--name`: as you may have guessed, set the name of the container.  
 
     To confirm, run `docker ps -a`. You should see a new busybox container with the name "busybox_interactive".
 
@@ -126,24 +125,28 @@ Rather than doing this with the `run` command, we shall manually `pull`, `create
 
     Our terminal is now displaying the contents from inside the container.  
 
-    To return our terminal to the host, we can either:
-     - Use the shortcut `Ctrl+P,Ctrl+Q`: this will keep the container running
-     - `logout`, `exit`: this will end the process and thus the container will exit
+    To return our terminal to the host, we can either:  
+    • Use the shortcut `Ctrl+P,Ctrl+Q`: this will keep the container running;  
+    • `logout`, `exit`: this will end the process and thus the container will exit.  
 
     If the container is still running, we can reattach to the sh on PID 1 with: `docker attach <ID|name>`.
 
----
-Challenge
-{:.text-delta}
-Rather than using `pull`, `create`, and `start` like we've done above, it's easier and more common to simply use `run`.
+    ---
+    Challenge
+    {:.text-delta}
+    Rather than using `pull`, `create`, and `start` like we've done above, it's easier and more common to simply use `run`.
 
-Using `run`, launch an interactive container named "busybox_interactive" from the "busybox" image.
+    Using `run`, launch an interactive container named "busybox_interactive" from the "busybox" image.
 
-<small>_Given names must be unique, and we already have a container with the same name, is it not necessary to run this command. Simply note what you'd think it'd be._</small>
+    <small>_Given names must be unique, and we already have a container with the same name, is it not necessary to run this command. Simply note what you'd think it'd be._</small>
 
-<details><summary markdown="span">Solution</summary>
-`docker run -it --name busybox_interactive busybox`
-</details>
+    <details><summary markdown="span">Solution</summary>
+    `docker run -it --name busybox_interactive busybox`
+
+    Note the similarly with the `create` command.  
+    </details>
+
+    ---
 
 ---
 ## PID 1 Explored Further

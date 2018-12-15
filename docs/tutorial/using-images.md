@@ -51,7 +51,7 @@ Let's use the image from linuxserver. Since this isn't an official image, it has
     
     You'll notice that we're unable to connect.
 
-    Athough the container exposes the port 8989, but we haven't published this to our host machine. Ports are published when we create a container, not when we start it.
+    Athough the container exposes the port 8989, but we haven't published this to our host machine.  
 
 3. Exit the container (ctrl+c) and let's run try again:
     ```
@@ -103,10 +103,7 @@ Keep note, though, each time we use `run`, it is creating a new container from t
 ---
 ## Inspecting and Volumes
 
-Although the container is running and working, there still an issue – our container isn't disposable. This is because it is storing state inside of the container. 
-
-However, when linuxserver created this image, they specified the following volumes to be created: `/tv`, `/config`, `/downloads`.  
-Given we didn't specify where to mount these volumes, it has been done for us automatically... albeit in an inconvinient location.  
+When linuxserver created this image, they specified the following volumes to be created: `/tv`, `/config`, `/downloads`. Given we didn't specify where to mount these volumes, it has been done for us automatically... albeit in an inconvinient location.  
 
 The host volume will always be mounted on top of the container volume.  
 
@@ -167,7 +164,7 @@ The host volume will always be mounted on top of the container volume.
 In order to mount a volume, we use the `-v` argument.  
 Syntax: `-v host:container`  
 
-This works the same as publishing a port – if the host isn't specified, it Docker will automatically assign one for you, as we just explored.  
+This works the same as publishing a port – if the host isn't specified, Docker will automatically assign one for you, as we just explored.  
 When mounting volumes, the host path must be absolute.  
 
 ---
@@ -199,7 +196,7 @@ docker run --rm -d -p 8989:8989 \
     linuxserver/sonarr
 ```
 
-As the host path must be absolute, we've provide $(pwd) to get the current directory.  
+As the host path must be absolute, we've provided `$(pwd)` to get the current directory.  
 You will notice multiple directories have been created in your current working directory - this is where Docker is mounting the associated volumes.
 
 We have also mounted `/etc/localtime` with `:ro` - read-only. This is because we want the container to use the timezone of the host, but without the ability to make modifications.  
