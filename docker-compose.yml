@@ -30,7 +30,7 @@ services:
     network_mode: host
     volumes:
       - ${CONFIG_DIR:?}/deluge:/config
-      - ${DOWNLOAD_DIR:?}:/torrents
+      - ${DOWNLOAD_DIR:?}:/downloads
     env_file: ./.env
     restart: unless-stopped
 
