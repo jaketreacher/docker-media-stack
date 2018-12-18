@@ -51,6 +51,7 @@ services:
     volumes:
       - ${CONFIG_DIR:?}/plex:/config
       - ${MEDIA_DIR:?}:/media
+      - ${TRANSCODE_DIR:?}:/transcode
     env_file: ./.env
     restart: unless-stopped
 
