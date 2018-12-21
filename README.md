@@ -44,6 +44,11 @@ Given each service in running inside a container, the paths are relative to the 
 - TV Shows: `/media/series`
 
 ---
+## Troubleshooting
+### Plex Transcoding Issues
+If Docker creates the `trancode` directory on the host, the permissions will be set to `root:root` and therefore Plex will not have access to it. Ensure this directory is owned by your host user and it will work.
+
+---
 ## Futher Information
 
 ### Tutorial
