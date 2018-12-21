@@ -19,7 +19,7 @@ services:
       - 7878:7878
     volumes:
       - ${CONFIG_DIR:?}/radarr:/config
-      - ${MEDIA_DIR:?}/movies:/tv
+      - ${MEDIA_DIR:?}/movies:/movies
       - ${DOWNLOAD_DIR:?}:/downloads
     env_file: ./.env
     restart: unless-stopped
