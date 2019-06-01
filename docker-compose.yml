@@ -1,49 +1,5 @@
 version: '3'
 services:
-  sonarr:
-    image: linuxserver/sonarr:latest
-    container_name: sonarr
-    ports:
-      - 8989:8989
-    volumes:
-      - ${CONFIG_DIR:?}/sonarr:/config
-      - ${MEDIA_DIR:?}/series:/tv
-      - ${DOWNLOAD_DIR:?}:/downloads
-    env_file: ./.env
-    restart: unless-stopped
-
-  radarr:
-    image: linuxserver/radarr:latest
-    container_name: radarr
-    ports:
-      - 7878:7878
-    volumes:
-      - ${CONFIG_DIR:?}/radarr:/config
-      - ${MEDIA_DIR:?}/movies:/movies
-      - ${DOWNLOAD_DIR:?}:/downloads
-    env_file: ./.env
-    restart: unless-stopped
-
-  deluge:
-    image: linuxserver/deluge:latest
-    container_name: deluge
-    network_mode: host
-    volumes:
-      - ${CONFIG_DIR:?}/deluge:/config
-      - ${DOWNLOAD_DIR:?}:/downloads
-    env_file: ./.env
-    restart: unless-stopped
-
-  jackett:
-    image: linuxserver/jackett:latest
-    container_name: jackett
-    ports:
-      - 9117:9117
-    volumes:
-      - ${CONFIG_DIR:?}/jackett:/config
-    env_file: ./.env
-    restart: unless-stopped
-
   plex:
     image: plexinc/pms-docker:latest
     container_name: plex
@@ -68,9 +24,9 @@ services:
 
   watchtower:
     image: v2tec/watchtower:latest
-    container_name: watchtower_media-stack
+    container_name: watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: sonarr radarr deluge jackett plex tautulli watchtower_media-stack -s "0 0 3 ? * *" --cleanup
+    command: -s "0 0 3 * * *" --cleanup
     env_file: ./.env
     restart: unless-stopped
