@@ -44,33 +44,21 @@ services:
     env_file: ./.env
     restart: unless-stopped
 
-  plex:
-    image: plexinc/pms-docker:latest
-    container_name: plex
-    network_mode: host
-    volumes:
-      - ${CONFIG_DIR:?}/plex:/config
-      - ${MEDIA_DIR:?}:/media
-      - ${TRANSCODE_DIR:?}:/transcode
-    env_file: ./.env
-    restart: unless-stopped
-
-  tautulli:
-    image: tautulli/tautulli:latest
-    container_name: tautulli
+  ombi:
+    image: linuxserver/ombi
+    container_name: ombi
     ports:
-      - 8181:8181
+      - 3579:3579
     volumes:
-      - ${CONFIG_DIR:?}/tautulli:/config
-      - ${CONFIG_DIR:?}/plex/Library/Application\ Support/Plex\ Media\Server/Logs/:/plex_logs:ro
+      - ${CONFIG_DIR:?}/ombi:/config
     env_file: ./.env
     restart: unless-stopped
 
   watchtower:
     image: v2tec/watchtower:latest
-    container_name: watchtower_media-stack
+    container_name: watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: sonarr radarr deluge jackett plex tautulli watchtower_media-stack -s "0 0 3 ? * *" --cleanup
+    command: -s "0 0 3 * * *" --cleanup
     env_file: ./.env
     restart: unless-stopped

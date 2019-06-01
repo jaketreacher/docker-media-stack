@@ -11,6 +11,7 @@ Deluge | https://deluge-torrent.org/ | `http://localhost:8112`
 Jackett | https://github.com/Jackett/Jackett | `http://localhost:9117`
 Plex | https://www.plex.tv | `https://app.plex.tv/desktop`
 Tautulli | http://tautulli.com/ | `http://localhost:8181`
+Ombi | https://ombi.io/ | `http://localhost:3579`
 
 ---
 ## Instructions
