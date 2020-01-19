@@ -1,10 +1,28 @@
 version: '3'
 services:
+  vpn:
+    image: bubuntux/nordvpn
+    container_name: nord
+    cap_add:
+      - net_admin
+    devices:
+      - /dev/net/tun
+    environment:
+      - NETWORK=192.168.1.0/24
+      - OPENVPN_OPTS=--pull-filter ignore "ping-restart" --ping-exit 180
+    env_file: ./.env
+    ports:
+      - 7878:7878
+      - 8989:8989
+      - 8112:8112
+      - 9117:9117
+      - 3579:3579
+    restart: unless-stopped
+
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
-    ports:
-      - 8989:8989
+    network_mode: service:vpn
     volumes:
       - ${CONFIG_DIR:?}/sonarr:/config
       - ${MEDIA_DIR:?}/series:/tv
@@ -15,8 +33,7 @@ services:
   radarr:
     image: linuxserver/radarr:latest
     container_name: radarr
-    ports:
-      - 7878:7878
+    network_mode: service:vpn
     volumes:
       - ${CONFIG_DIR:?}/radarr:/config
       - ${MEDIA_DIR:?}/movies:/movies
@@ -27,7 +44,7 @@ services:
   deluge:
     image: linuxserver/deluge:latest
     container_name: deluge
-    network_mode: host
+    network_mode: service:vpn
     volumes:
       - ${CONFIG_DIR:?}/deluge:/config
       - ${DOWNLOAD_DIR:?}:/downloads
@@ -37,8 +54,7 @@ services:
   jackett:
     image: linuxserver/jackett:latest
     container_name: jackett
-    ports:
-      - 9117:9117
+    network_mode: service:vpn
     volumes:
       - ${CONFIG_DIR:?}/jackett:/config
     env_file: ./.env
@@ -47,8 +63,7 @@ services:
   ombi:
     image: linuxserver/ombi
     container_name: ombi
-    ports:
-      - 3579:3579
+    network_mode: service:vpn
     volumes:
       - ${CONFIG_DIR:?}/ombi:/config
     env_file: ./.env
